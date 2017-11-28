@@ -31,6 +31,22 @@ class myClass:
         
         return str(a+b)
     
+    @api.route("/insertData",methods=['post'])
+    def doInsert():
+        id = int(json.loads(request.data)['id'])
+        city= json.loads(request.data)['city']
+        name = json.loads(request.data)['name']
+        session = cluster.connect('tutorialspoint')
+        session.execute(
+        """
+        INSERT INTO emp (emp_id, emp_city, emp_name)
+        VALUES (%s, %s, %s)
+        """,
+        (id, city, name)
+        )
+        return "SUCCESS"
+    
+    
 
 
 
